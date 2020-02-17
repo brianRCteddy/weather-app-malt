@@ -11,6 +11,7 @@ import {
   SET_CITY,
   FILTER_DAILY_FORECAST_DATA,
   FILTER_HOURLY_FORECAST_DATA,
+  CHANGE_INDEX,
 } from './constants';
 
 export function initFetch() {
@@ -51,5 +52,12 @@ export function filterHourly(data) {
   return {
     type: FILTER_HOURLY_FORECAST_DATA,
     data,
+  };
+}
+
+export function changeIndex(index) {
+  return {
+    type: CHANGE_INDEX,
+    index,
   };
 }
