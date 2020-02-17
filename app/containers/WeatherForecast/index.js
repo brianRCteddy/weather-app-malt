@@ -14,7 +14,7 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import makeSelectWeatherForecast, { makeSelectCity } from './selectors';
+import { makeSelectCity, makeSelectWeatherForecast } from './selectors';
 import { filterDaily } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -57,7 +57,7 @@ WeatherForecast.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  weatherForecast: makeSelectWeatherForecast(),
+  weatherForecastPage: makeSelectWeatherForecast(),
   city: makeSelectCity(),
 });
 
