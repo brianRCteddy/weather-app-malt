@@ -33,7 +33,7 @@ export function successFetch(data, city) {
   };
 }
 
-export function setCity(city) {
+export function setCityLocation(city) {
   return {
     type: SET_CITY,
     city,
