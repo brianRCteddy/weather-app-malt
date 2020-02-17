@@ -1,0 +1,28 @@
+image: node:lts
+
+stages:
+  - deploy
+
+.deploy: &deploy
+  before_script:
+    - oc login "$OPENSHIFT_SERVER" -u="$OPENSHIFT_USER" -p="$OPENSHIFT_TOKEN" --insecure-skip-tls-verify
+    - oc project "$OPENSHIFT_NAMESPACE"
+  script:
+    - "oc get services $APP 2> /dev/null || oc new-app . --name=$APP --strategy=docker -l app=$APP 2> /dev/null"
+    - '(oc get bc $APP && oc set env bc/$APP)'
+    - "oc start-build $APP --from-dir=. --follow || (sleep 3s && oc start-build $APP --from-dir=. --follow)"
+    - 'oc get routes $APP 2> /dev/null || (oc expose service $APP --hostname=$APP_HOST && oc patch route $APP -p ''{"spec":{"tls":{"termination":"edge"}}}'')'
+    - 'oc describe route $APP'
+
+Deploy:
+  image: jhidalgo3/openshift-node-docker:7-alpine
+  <<: *deploy
+  stage: deploy
+  variables:
+    APP: "$OPENSHIFT_APP-web"
+    APP_HOST: $OPENSHIFT_APP-$OPENSHIFT_NAMESPACE-web.$OPENSHIFT_DOMAIN
+  environment:
+    name: master
+    url: https://$OPENSHIFT_APP-$OPENSHIFT_NAMESPACE-web.$OPENSHIFT_DOMAIN
+  only:
+    - master

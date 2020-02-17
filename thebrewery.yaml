@@ -1,0 +1,4 @@
+name: WeatherAppMalt
+description: 'Five-Day Forecast'
+framework: Malt.js
+template: react-boilerplate
