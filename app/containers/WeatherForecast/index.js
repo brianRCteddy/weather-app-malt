@@ -47,7 +47,6 @@ export function WeatherForecast(props) {
           ))}
         </div>
       )}
-      <FormattedMessage {...messages.header} />
     </div>
   );
 }
