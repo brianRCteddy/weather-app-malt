@@ -18,7 +18,6 @@ import { makeSelectCity, makeSelectWeatherForecast } from './selectors';
 import { filterDaily } from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
 
 import Search from '../../components/Search';
 import Loading from '../../components/Loading';

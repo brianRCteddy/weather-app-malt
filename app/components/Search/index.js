@@ -18,17 +18,24 @@ import {
 import { makeSelectCity } from '../../containers/WeatherForecast/selectors';
 
 function Search(props) {
+  const handleSubmit = e => {
+    e.preventDefault();
+    props.onInitFetch();
+  };
+
   return (
     <div>
-      <input
-        type="text"
-        value={props.city}
-        placeholder="Enter City here. Ex. London"
-        onChange={props.setCityHandler}
-      />
-      <button type="button" onClick={() => props.onInitFetch()}>
-        Get Weather Data
-      </button>
+      <form action="submit" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={props.city}
+          placeholder="Enter City here. Ex. London"
+          onChange={props.setCityHandler}
+        />
+        <button type="button" onClick={() => props.onInitFetch()}>
+          Get Weather Data
+        </button>
+      </form>
     </div>
   );
 }

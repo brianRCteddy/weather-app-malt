@@ -33,7 +33,7 @@ const appendZero = n => {
 };
 
 // logic to transform the data from full newDate to "YYYY-MM-DD" ex. "2020-02-22"
-const tranformDate = fullDate => {
+const transformDate = fullDate => {
   const formattedDate = `${fullDate.getFullYear()}-${appendZero(
     fullDate.getMonth() + 1,
   )}-${appendZero(fullDate.getDate())}`;
@@ -46,11 +46,11 @@ const day3 = addDays(dateToday, 3);
 const day4 = addDays(dateToday, 4);
 const day5 = addDays(dateToday, 5);
 
-const tranformDay1 = tranformDate(day1);
-const tranformDay2 = tranformDate(day2);
-const tranformDay3 = tranformDate(day3);
-const tranformDay4 = tranformDate(day4);
-const tranformDay5 = tranformDate(day5);
+const tranformDay1 = transformDate(day1);
+const tranformDay2 = transformDate(day2);
+const tranformDay3 = transformDate(day3);
+const tranformDay4 = transformDate(day4);
+const tranformDay5 = transformDate(day5);
 
 export const initialState = {
   city: '',
