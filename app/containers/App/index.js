@@ -15,11 +15,13 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import GlobalStyle from '../../global-styles';
 import WeatherForecast from '../WeatherForecast';
 import HourlyForecast from '../../components/HourlyForecast';
+import Auth from '../Auth';
 
 export default function App() {
   return (
     <div>
       <Switch>
+        <Route exact path="/login" component={Auth} />
         <Route exact path="/:day" component={HourlyForecast} />
         <Route exact path="/" component={WeatherForecast} />
         <Route component={NotFoundPage} />

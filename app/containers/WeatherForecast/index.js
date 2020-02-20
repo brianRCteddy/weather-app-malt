@@ -8,9 +8,9 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Redirect } from 'react-router-dom';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -22,10 +22,15 @@ import saga from './saga';
 import Search from '../../components/Search';
 import Loading from '../../components/Loading';
 import DailyForecast from '../../components/DailyForecast';
+import { makeSelectToken } from '../Auth/selectors';
+import { logoutSucceed } from '../Auth/actions';
 
 export function WeatherForecast(props) {
   useInjectReducer({ key: 'weatherForecast', reducer });
   useInjectSaga({ key: 'weatherForecast', saga });
+  if (!props.token) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <div>
@@ -44,6 +49,9 @@ export function WeatherForecast(props) {
           {props.weatherForecastPage.dailyData.map((day, index) => (
             <DailyForecast key={day.dt} index={index} day={day} />
           ))}
+          <button onClick={props.logout} type="button">
+            Logout
+          </button>
         </div>
       )}
     </div>
@@ -52,15 +60,19 @@ export function WeatherForecast(props) {
 
 WeatherForecast.propTypes = {
   weatherForecastPage: PropTypes.object.isRequired,
+  token: PropTypes.string,
+  logout: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   weatherForecastPage: makeSelectWeatherForecast(),
   city: makeSelectCity(),
+  token: makeSelectToken(),
 });
 
 const mapDispatchToProps = dispatch => ({
   filterDaily: data => dispatch(filterDaily(data)),
+  logout: () => dispatch(logoutSucceed()),
 });
 
 const withConnect = connect(
