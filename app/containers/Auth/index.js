@@ -18,6 +18,8 @@ import {
   makeSelectError,
   makeSelectToken,
   makeSelectLoading,
+  makeSelectAuth,
+  makeSelectUserId,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -27,6 +29,7 @@ import Loading from '../../components/Loading';
 export function Auth(props) {
   useInjectReducer({ key: 'auth', reducer });
   useInjectSaga({ key: 'auth', saga });
+  console.log(props);
   return (
     <div>
       <Helmet>
@@ -45,6 +48,7 @@ Auth.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  userId: makeSelectUserId(),
   loading: makeSelectLoading(),
   token: makeSelectToken(),
   error: makeSelectError(),

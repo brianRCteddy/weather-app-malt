@@ -21,6 +21,12 @@ const makeSelectAuth = () =>
     substate => substate,
   );
 
+const makeSelectUserId = () =>
+  createSelector(
+    selectAuthDomain,
+    substate => substate.userId,
+  );
+
 const makeSelectToken = () =>
   createSelector(
     selectAuthDomain,
@@ -39,5 +45,11 @@ const makeSelectLoading = () =>
     substate => substate.loading,
   );
 
-export { makeSelectAuth, makeSelectError, makeSelectToken, makeSelectLoading };
+export {
+  makeSelectAuth,
+  makeSelectError,
+  makeSelectToken,
+  makeSelectLoading,
+  makeSelectUserId,
+};
 export { selectAuthDomain };
