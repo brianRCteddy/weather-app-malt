@@ -43,7 +43,8 @@ const authReducer = (state = initialState, action) =>
         break;
       case AUTH_SUCCESS:
         draft.token = action.token;
-        draft.userId = action.userId;
+        draft.firstName = action.firstName;
+        draft.lastName = action.lastName;
         draft.error = null;
         draft.loading = false;
         break;

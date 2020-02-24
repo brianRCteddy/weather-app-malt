@@ -22,7 +22,12 @@ import saga from './saga';
 import Search from '../../components/Search';
 import Loading from '../../components/Loading';
 import DailyForecast from '../../components/DailyForecast';
-import { makeSelectToken, makeSelectUserId } from '../Auth/selectors';
+import {
+  makeSelectToken,
+  makeSelectUserId,
+  makeSelectFirstName,
+  makeSelectLastName,
+} from '../Auth/selectors';
 import { logoutSucceed } from '../Auth/actions';
 
 export function WeatherForecast(props) {
@@ -39,7 +44,9 @@ export function WeatherForecast(props) {
         <meta name="description" content="Description of WeatherForecast" />
       </Helmet>
       <h1>5 Day Weather Forecast</h1>
-      <h2>Good Day User {props.userId}!</h2>
+      <h2>
+        Good Day {props.firstName} {props.lastName}!
+      </h2>
       {props.weatherForecastPage.isLoading ? (
         <Loading />
       ) : (
@@ -62,7 +69,8 @@ export function WeatherForecast(props) {
 WeatherForecast.propTypes = {
   weatherForecastPage: PropTypes.object.isRequired,
   token: PropTypes.string,
-  userId: PropTypes.string,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
   logout: PropTypes.func,
 };
 
@@ -70,6 +78,8 @@ const mapStateToProps = createStructuredSelector({
   weatherForecastPage: makeSelectWeatherForecast(),
   city: makeSelectCity(),
   token: makeSelectToken(),
+  firstName: makeSelectFirstName(),
+  lastName: makeSelectLastName(),
   userId: makeSelectUserId(),
 });
 

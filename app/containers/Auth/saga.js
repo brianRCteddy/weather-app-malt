@@ -24,7 +24,7 @@ import { makeSelectUserId } from './selectors';
 
 // Individual exports for testing
 // https://final-amberjs-task.herokuapp.com/api
-const ROOT_URL = 'https://final-amberjs-task.herokuapp.com/api';
+const ROOT_URL = 'https://finaltask-amberjs.herokuapp.com/api';
 
 function* logoutSaga() {
   yield call([localStorage, 'removeItem'], 'token');
@@ -36,10 +36,10 @@ function* authUserSaga({ email, password }) {
   try {
     const response = yield axios.post(`${ROOT_URL}/login`, { email, password });
 
-    const { token, userId } = response.data.details.result;
+    const { token, firstName, lastName } = response.data.details.result;
 
     yield localStorage.setItem('token', token);
-    yield put(authSuccess(token, userId));
+    yield put(authSuccess(token, firstName, lastName));
     // yield put(getUserDetailsRequest());
   } catch (error) {
     yield put(authError(error.response.data.details));

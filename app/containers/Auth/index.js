@@ -34,7 +34,7 @@ import SignUpForm from '../../components/SignUpForm';
 export function Auth(props) {
   useInjectReducer({ key: 'auth', reducer });
   useInjectSaga({ key: 'auth', saga });
-  console.log(props);
+
   return (
     <div>
       <Helmet>
