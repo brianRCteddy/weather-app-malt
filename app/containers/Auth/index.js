@@ -20,11 +20,16 @@ import {
   makeSelectLoading,
   makeSelectAuth,
   makeSelectUserId,
+  makeSelectRole,
+  makeSelectSignUpError,
+  makeSelectMessage,
+  makeSelectSignUpLoading,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import LoginForm from '../../components/LoginForm';
 import Loading from '../../components/Loading';
+import SignUpForm from '../../components/SignUpForm';
 
 export function Auth(props) {
   useInjectReducer({ key: 'auth', reducer });
@@ -37,7 +42,28 @@ export function Auth(props) {
         <meta name="description" content="Description of Auth" />
       </Helmet>
       <LoginForm />
-      {props.loading ? <Loading /> : <strong>{props.error}</strong>}
+      {props.loading ? (
+        <h2 style={{ color: 'blue' }}>
+          <Loading />
+        </h2>
+      ) : (
+        <strong>{props.error}</strong>
+      )}
+
+      <br />
+      <br />
+
+      <SignUpForm />
+      {props.signUpLoading ? (
+        <h2 style={{ color: 'blue' }}>
+          <Loading />
+        </h2>
+      ) : (
+        <h2 style={{ color: 'green' }}>{props.message}</h2>
+      )}
+      {props.errorSignUp ? (
+        <h2 style={{ color: 'red' }}>{props.errorSignUp}</h2>
+      ) : null}
     </div>
   );
 }
@@ -45,13 +71,20 @@ export function Auth(props) {
 Auth.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.string,
+  signUpLoading: PropTypes.bool,
+  message: PropTypes.string,
+  errorSignUp: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
+  authData: makeSelectAuth(),
   userId: makeSelectUserId(),
   loading: makeSelectLoading(),
   token: makeSelectToken(),
   error: makeSelectError(),
+  errorSignUp: makeSelectSignUpError(),
+  message: makeSelectMessage(),
+  signUpLoading: makeSelectSignUpLoading(),
 });
 
 const withConnect = connect(mapStateToProps);

@@ -19,7 +19,7 @@ function* fetchForecastData() {
     yield put(filterDaily(data.list));
     yield put(filterHourly(data.list));
   } catch (error) {
-    yield put(errorFetch());
+    yield put(errorFetch(error));
   }
 }
 

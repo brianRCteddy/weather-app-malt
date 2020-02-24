@@ -45,11 +45,39 @@ const makeSelectLoading = () =>
     substate => substate.loading,
   );
 
+const makeSelectSignUpError = () =>
+  createSelector(
+    selectAuthDomain,
+    substate => substate.signUpError,
+  );
+
+const makeSelectSignUpLoading = () =>
+  createSelector(
+    selectAuthDomain,
+    substate => substate.signUpLoading,
+  );
+
+const makeSelectRole = () =>
+  createSelector(
+    selectAuthDomain,
+    substate => substate.role,
+  );
+
+const makeSelectMessage = () =>
+  createSelector(
+    selectAuthDomain,
+    substate => substate.message,
+  );
+
 export {
   makeSelectAuth,
   makeSelectError,
   makeSelectToken,
   makeSelectLoading,
   makeSelectUserId,
+  makeSelectSignUpError,
+  makeSelectRole,
+  makeSelectMessage,
+  makeSelectSignUpLoading,
 };
 export { selectAuthDomain };

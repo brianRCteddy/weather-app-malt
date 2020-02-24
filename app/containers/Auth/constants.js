@@ -12,6 +12,7 @@ export const AUTH_ERROR = 'app/Auth/AUTH_ERROR';
 export const AUTH_REQUEST_LOGOUT = 'app/Auth/AUTH_REQUEST_LOGOUT';
 export const AUTH_LOGOUT = 'app/Auth/AUTH_LOGOUT';
 
+export const SIGN_UP = 'app/Auth/SIGN_UP';
 export const SIGN_UP_REQUEST = 'app/Auth/SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'app/Auth/SIGN_UP_SUCCESS';
 export const SIGN_UP_ERROR = 'app/Auth/SIGN_UP_ERROR';

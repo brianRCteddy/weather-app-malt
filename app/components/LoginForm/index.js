@@ -26,7 +26,7 @@ function LoginForm(props) {
     return <Redirect to="/" />;
   }
 
-  const handleSubmit = e => {
+  const handleSubmitLogin = e => {
     e.preventDefault();
     props.login(email, password);
   };
@@ -34,7 +34,7 @@ function LoginForm(props) {
   return (
     <div>
       <h1>Log In</h1>
-      <form action="submit" onSubmit={handleSubmit}>
+      <form action="submit" onSubmit={handleSubmitLogin}>
         <input
           type="email"
           placeholder="Email"

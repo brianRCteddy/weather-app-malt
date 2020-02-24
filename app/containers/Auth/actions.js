@@ -15,6 +15,9 @@ import {
   GET_USER_DETAILS_REQUEST,
   GET_USER_DETAILS_SUCCESS,
   GET_USER_DETAILS_ERROR,
+  SIGN_UP_SUCCESS,
+  SIGN_UP,
+  SIGN_UP_ERROR,
 } from './constants';
 
 export function authUser(email, password) {
@@ -78,14 +81,34 @@ export function getUserDetailsError(error) {
   };
 }
 
-export function signUp(email, password, firstname, lastname, middlename, role) {
+export function signUp(email, password, firstName, middleName, lastName, role) {
   return {
-    type: SIGN_UP_REQUEST,
+    type: SIGN_UP,
     email,
     password,
-    firstname,
-    lastname,
-    middlename,
+    firstName,
+    middleName,
+    lastName,
     role,
+  };
+}
+
+export function signUpRequest() {
+  return {
+    type: SIGN_UP_REQUEST,
+  };
+}
+
+export function signUpSuccess(message) {
+  return {
+    type: SIGN_UP_SUCCESS,
+    message,
+  };
+}
+
+export function signUpError(error) {
+  return {
+    type: SIGN_UP_ERROR,
+    error,
   };
 }
