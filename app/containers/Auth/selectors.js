@@ -81,6 +81,12 @@ const makeSelectLastName = () =>
     substate => substate.lastName,
   );
 
+const makeSelectUserLoading = () =>
+  createSelector(
+    selectAuthDomain,
+    substate => substate.userLoading,
+  );
+
 export {
   makeSelectAuth,
   makeSelectError,
@@ -93,5 +99,6 @@ export {
   makeSelectSignUpLoading,
   makeSelectFirstName,
   makeSelectLastName,
+  makeSelectUserLoading,
 };
 export { selectAuthDomain };

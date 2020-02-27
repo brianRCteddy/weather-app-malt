@@ -4,9 +4,10 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { createStructuredSelector } from 'reselect';
@@ -24,12 +25,15 @@ import {
   makeSelectSignUpError,
   makeSelectMessage,
   makeSelectSignUpLoading,
+  makeSelectUserLoading,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import LoginForm from '../../components/LoginForm';
 import Loading from '../../components/Loading';
 import SignUpForm from '../../components/SignUpForm';
+import { WeatherForecast } from '../WeatherForecast';
+import { getUserDetailsRequest } from './actions';
 
 export function Auth(props) {
   useInjectReducer({ key: 'auth', reducer });
@@ -77,7 +81,6 @@ Auth.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  authData: makeSelectAuth(),
   userId: makeSelectUserId(),
   loading: makeSelectLoading(),
   token: makeSelectToken(),
@@ -85,6 +88,7 @@ const mapStateToProps = createStructuredSelector({
   errorSignUp: makeSelectSignUpError(),
   message: makeSelectMessage(),
   signUpLoading: makeSelectSignUpLoading(),
+  userLoading: makeSelectUserLoading(),
 });
 
 const withConnect = connect(mapStateToProps);

@@ -34,12 +34,11 @@ export function authRequest() {
   };
 }
 
-export function authSuccess(token, firstName, lastName) {
+export function authSuccess(token, id) {
   return {
     type: AUTH_SUCCESS,
     token,
-    firstName,
-    lastName,
+    id,
   };
 }
 

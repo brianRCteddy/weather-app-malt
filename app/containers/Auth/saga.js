@@ -1,4 +1,4 @@
-import { takeEvery, all, call, put, select } from 'redux-saga/effects';
+import { takeEvery, all, call, put, select, delay } from 'redux-saga/effects';
 import axios from 'axios';
 
 import {
@@ -14,13 +14,12 @@ import {
   authError,
   getUserDetailsSuccess,
   getUserDetailsError,
-  getUserDetailsRequest,
   signUpRequest,
   signUpError,
   signUpSuccess,
 } from './actions';
-import request from '../../utils/request';
-import { makeSelectUserId } from './selectors';
+
+import { makeSelectUserId, makeSelectToken } from './selectors';
 
 // Individual exports for testing
 // https://final-amberjs-task.herokuapp.com/api
@@ -33,13 +32,14 @@ function* logoutSaga() {
 
 function* authUserSaga({ email, password }) {
   yield put(authRequest());
+  // const tokenState = yield select(makeSelectToken());
   try {
     const response = yield axios.post(`${ROOT_URL}/login`, { email, password });
 
-    const { token, firstName, lastName } = response.data.details.result;
+    const { token, id } = response.data.details.result;
 
     yield localStorage.setItem('token', token);
-    yield put(authSuccess(token, firstName, lastName));
+    yield put(authSuccess(token, id));
     // yield put(getUserDetailsRequest());
   } catch (error) {
     yield put(authError(error.response.data.details));
@@ -71,24 +71,30 @@ function* signUpSaga({
   }
 }
 
-// function* getUserDetailsSaga() {
-//   const userID = yield select(makeSelectUserId());
-//   const url = `${ROOT_URL}/user?id=${userID}`;
+function* getUserDetailsSaga() {
+  const userID = yield select(makeSelectUserId());
+  const url = `${ROOT_URL}/user?id=${userID}`;
 
-//   try {
-//     const data = yield axios.get(url);
-//     yield put(getUserDetailsSuccess(data.details.result));
-//   } catch (error) {
-//     yield put(getUserDetailsError(error));
-//   }
-// }
+  try {
+    const tokenFromStorage = yield select(makeSelectToken());
+    const data = yield axios.get({
+      method: 'GET',
+      url,
+      headers: { Authorization: `Bearer ${tokenFromStorage}` },
+    });
+
+    yield put(getUserDetailsSuccess(data.details.result));
+  } catch (error) {
+    yield put(getUserDetailsError(error));
+  }
+}
 
 export default function* authSaga() {
   // See example in containers/HomePage/saga.js
   yield all([
-    takeEvery(AUTH_REQUEST_LOGOUT, logoutSaga),
     takeEvery(AUTH_USER, authUserSaga),
+    takeEvery(GET_USER_DETAILS_REQUEST, getUserDetailsSaga),
     takeEvery(SIGN_UP, signUpSaga),
-    // takeEvery(GET_USER_DETAILS_REQUEST, getUserDetailsSaga),
+    takeEvery(AUTH_REQUEST_LOGOUT, logoutSaga),
   ]);
 }

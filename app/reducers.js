@@ -16,7 +16,7 @@ export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({
     language: languageProviderReducer,
     router: connectRouter(history),
-    weatherForecastPage: weatherForecastReducer,
+    weatherForecast: weatherForecastReducer,
     ...injectedReducers,
   });
 

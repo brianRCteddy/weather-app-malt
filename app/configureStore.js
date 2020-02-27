@@ -53,7 +53,7 @@ export default function configureStore(initialState = {}, history) {
   store.injectedSagas = {}; // Saga registry
   store.subscribe(
     throttle(() => {
-      saveState({ weatherForecastPage: store.getState().weatherForecastPage });
+      saveState({ weatherForecast: store.getState().weatherForecast });
     }, 1000),
   );
   // Make reducers hot reloadable, see http://mxs.is/googmo
