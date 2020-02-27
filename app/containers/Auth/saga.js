@@ -72,18 +72,18 @@ function* signUpSaga({
 }
 
 function* getUserDetailsSaga() {
+  const tokenFromStorage = yield select(makeSelectToken());
   const userID = yield select(makeSelectUserId());
   const url = `${ROOT_URL}/user?id=${userID}`;
 
   try {
-    const tokenFromStorage = yield select(makeSelectToken());
-    const data = yield axios.get({
-      method: 'GET',
+    const response = yield axios.get(url, {
+      method: 'get',
       url,
       headers: { Authorization: `Bearer ${tokenFromStorage}` },
     });
 
-    yield put(getUserDetailsSuccess(data.details.result));
+    yield put(getUserDetailsSuccess(response.data.details.result));
   } catch (error) {
     yield put(getUserDetailsError(error));
   }

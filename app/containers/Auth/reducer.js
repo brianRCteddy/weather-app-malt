@@ -19,6 +19,7 @@ import {
 
 export const initialState = {
   userId: null,
+  email: '',
   firstName: '',
   middleName: '',
   lastName: '',
@@ -56,10 +57,11 @@ const authReducer = (state = initialState, action) =>
         draft.userError = null;
         break;
       case GET_USER_DETAILS_SUCCESS:
-        draft.firstName = action.firstName;
-        draft.middleName = action.middleName;
-        draft.lastName = action.lastName;
-        draft.role = action.role;
+        draft.email = action.data.email;
+        draft.firstName = action.data.firstName;
+        draft.middleName = action.data.middleName;
+        draft.lastName = action.data.lastName;
+        draft.role = action.data.role;
         draft.userLoading = false;
         draft.userError = null;
         break;

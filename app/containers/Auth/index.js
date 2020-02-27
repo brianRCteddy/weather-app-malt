@@ -15,25 +15,19 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+
 import {
   makeSelectError,
-  makeSelectToken,
   makeSelectLoading,
-  makeSelectAuth,
-  makeSelectUserId,
-  makeSelectRole,
   makeSelectSignUpError,
   makeSelectMessage,
   makeSelectSignUpLoading,
-  makeSelectUserLoading,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import LoginForm from '../../components/LoginForm';
 import Loading from '../../components/Loading';
 import SignUpForm from '../../components/SignUpForm';
-import { WeatherForecast } from '../WeatherForecast';
-import { getUserDetailsRequest } from './actions';
 
 export function Auth(props) {
   useInjectReducer({ key: 'auth', reducer });
@@ -81,14 +75,11 @@ Auth.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  userId: makeSelectUserId(),
   loading: makeSelectLoading(),
-  token: makeSelectToken(),
   error: makeSelectError(),
   errorSignUp: makeSelectSignUpError(),
   message: makeSelectMessage(),
   signUpLoading: makeSelectSignUpLoading(),
-  userLoading: makeSelectUserLoading(),
 });
 
 const withConnect = connect(mapStateToProps);
